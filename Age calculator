@@ -1,0 +1,22 @@
+age = int(input("Enter your age in years: "))
+
+# Calculate months, weeks, and days
+months = age * 12
+weeks = age * 52
+days = age * 365
+
+# Calculate the equivalent values if lived for 90 years
+months_90 = 90 * 12
+weeks_90 = 90 * 52
+days_90 = 90 * 365
+
+# Print the results
+print("You have lived for:")
+print("Months:", months)
+print("Weeks:", weeks)
+print("Days:", days)
+
+print("If you lived for 90 years, you would have:")
+print("Months:", months_90)
+print("Weeks:", weeks_90)
+print("Days:", days_90)
