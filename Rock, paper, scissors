@@ -1,0 +1,49 @@
+import random
+rock = '''
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+'''
+
+paper = '''
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+'''
+
+scissors = '''
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+'''
+print(rock)
+#Write your code below this line 👇
+userchoice= input("Enter whats your choice 0 for rock, 1 for paper and 2 scissors")
+
+codechoice= random.randint(0,2)
+print("Code choice is "+str(codechoice))
+
+if (int(userchoice)==0) and (codechoice==2):
+  print("You win!")
+elif (int(userchoice)==2) and (codechoice==0):
+  print("You Lose!")
+elif (codechoice>int(userchoice)):
+  print("You Lose!")
+elif (str(codechoice)==str(userchoice)):
+  print("Its a draw")
+      
+
+
+
+  
+
+
