@@ -13,7 +13,7 @@ def colorsss():
   return random_color
 
 turtle.colormode(255)
-t.speed("fastest")
+t.speed("slow")
 
 default_radius=100
 default_rotate=2
