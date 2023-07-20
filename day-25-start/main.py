@@ -1,22 +1,19 @@
-
-import csv
 import pandas
 
-filee= open("day-25-start/weather_data.csv")
-filedata= pandas.read_csv(filee)
-temperatures=[]
-for row in filedata:
-    if row[1]!="temp":
-        temperatures.append(row[1])
+file= open("day-25-start/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv")
+data= pandas.read_csv(file)
+gray_squirrel= (len(data[data["Primary Fur Color"] == "Gray"]))
+Cinnamon_squirrel= (len(data[data["Primary Fur Color"] == "Cinnamon"]))
+Black_squirrel= (len(data[data["Primary Fur Color"] == "Black"]))
 
-print(temperatures)
-
+print(f"Gray: {gray_squirrel}, Cinnamon: {Cinnamon_squirrel}, Black: {Black_squirrel}")
 
 
-file= open("day-25-start/weather_data.csv")
-filedataa= pandas.read_csv(file)
-temperatures=[]
 
 
-print(filedataa["temp"])
+my_dict= {"Fur": ["Gray", "Cinnamon", "Black"],
+          "Count": [gray_squirrel, Cinnamon_squirrel, Black_squirrel]
+          }
 
+dataa= pandas.DataFrame(my_dict)
+dataa.to_csv("/Users/air/Desktop/100daysofpython/day-25-start/squirrel.csv")
