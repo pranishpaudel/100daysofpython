@@ -12,7 +12,7 @@ window.minsize(width= 500, height=300)
 
 
 label= Label(text=clickss, font=("Arial",24,"bold"))
-label.pack()
+label.place(x=0,y=150)
 
 
 
