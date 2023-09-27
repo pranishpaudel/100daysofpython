@@ -62,7 +62,7 @@ else:
 
 # # TODO 5. - If TODO4 percentage is greater than 5 then print("Get News").
 if diff_per_closing>5:
-        news_req = requests.get(f"https://newsapi.org/v2/everything?q=tesla&from=2023-08-23&sortBy=publishedAt&apiKey={NEWS_API}").json()["articles"]
+        news_req = requests.get(f"https://newsapi.org/v2/everything?q=tesla&from=2023-08-27&sortBy=publishedAt&apiKey={NEWS_API}").json()["articles"]
         news_list= []
         for num in range(1,4):
          news_list.append(news_req[:num])
@@ -80,7 +80,7 @@ else:
 
 
 print(final_message)
-print(news_title_list[2])
+
 
 
 # # STEP 2: https://newsapi.org/
