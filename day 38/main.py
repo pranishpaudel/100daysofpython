@@ -8,7 +8,7 @@ HEIGHT= "160"
 AGE= "19"
 
 Neuro_ENDPOINT= "https://trackapi.nutritionix.com/v2/natural/exercise"
-Sheety_ENDPOINT= "https://api.sheety.co/dc75c65f05583199abca8a52296acf46/myWorkouts/workouts"
+Sheety_ENDPOINT= "https://api.sheety.co/d0b1efc67d18564e79bd6d0ed95fa049/opppp/workouts"
 
 
 
@@ -26,23 +26,36 @@ Neuro_params= {
  "age":AGE,
 }
 
-result = requests.post(url=Neuro_ENDPOINT, json= Neuro_params, headers= Neuro_header).json()
+response = requests.post(url=Neuro_ENDPOINT, json= Neuro_params, headers= Neuro_header)
+result = response.json()
+
+################### Start of Step 4 Solution ######################
 
 today_date = datetime.now().strftime("%d/%m/%Y")
 now_time = datetime.now().strftime("%X")
 
+all_exercise= []
+constt= 0
+
 for exercise in result["exercises"]:
-    sheet_inputs = {
+    sheet_inputs={
         "workout": {
             "date": today_date,
             "time": now_time,
             "exercise": exercise["name"].title(),
             "duration": exercise["duration_min"],
-            "calories": exercise["nf_calories"]
+            "calories": exercise["nf_calories"],
         }
     }
+    all_exercise.append(sheet_inputs)
+    constt+=1
 
+sheety_header= {
+    "Authorization": "Bearer 342sad343#fdscfdsdf",
+}
 
-sheet_response = requests.post(Sheety_ENDPOINT, json=sheet_inputs)
-print(sheet_response.text)
-# print(Neuro_output.json())
+for insa in range (0, constt):
+    
+    sheet_response = requests.post(Sheety_ENDPOINT, json=all_exercise[insa],headers=sheety_header)
+
+# print(sheet_response.text)
