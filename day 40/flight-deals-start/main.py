@@ -1,9 +1,33 @@
 from data_manager import DataManager
 from check_flight import FlightData
 from notification_manager import NotificationManager
+from customer_acc import Acquire_Cust
 import requests
+from email import EMAIL
 
 
+print("Welcome to Pranish Flight Club!")
+print("We find best flight deals and send you")
+nfirstt= input("What is your first name?")
+nlastt= input("What is your last name?")
+
+is_email_matched= False
+while not is_email_matched:
+    nemaill= input("What is your email?")
+    nemailll= input("Please reconfirm your email?")
+    if nemaill.lower()==nemailll.lower():
+        is_email_matched=True
+    else:
+        userwant= input("Either Of the email not matched. Do you want to retry?(Y/N)")
+        if userwant.lower()=="n":
+            exit()
+        else:
+            is_email_matched=False
+
+
+ac_cust= Acquire_Cust(nfirst= nfirstt,nlast=nlastt,nemail=nemaill).send_acquire()
+
+print(ac_cust)
 
 lowest_flight= FlightData().get_low_price()
 print(lowest_flight)
@@ -15,7 +39,14 @@ for element in lowest_flight:
     
     # Merge city and price in a single print statement
     msg_to_be_sent= f"City: {city}, Price: {price}"
-    send_sms= NotificationManager().send_msg(msg_to_be_sent)
+    emaill= EMAIL(msg_to_be_sent
+    # send_sms= NotificationManager().send_msg(msg_to_be_sent)
+
+
+
+
+
+
 
 
 
