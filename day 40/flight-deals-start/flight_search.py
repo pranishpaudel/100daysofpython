@@ -40,19 +40,23 @@ class flightSearch():
             "fly_to": destination_city_code,
             "date_from":  "30/09/2023",
             "date_to": self.six_months_later_formatted,
-            "curr": "GBP"
+            "curr": "GBP",
         }
 
         self.searchf= requests.get(url="https://api.tequila.kiwi.com/v2/search",headers=self.headers,params= self.query).json()
         return (self.searchf) 
     
     def execute_search(self,city1,city2):
-
-          flightsearch= self.search_flight(city1,city2)
-
-          flightprice= flightsearch["data"][0]["price"]
           
-          return flightprice
+          try:
+            flightsearch= self.search_flight(city1,city2)
+
+            flightprice= flightsearch["data"][0]["price"]
+            
+            return flightprice
+          except IndexError:
+              print("OUT OF FLIGHT")
+              exit()
 
 
 
