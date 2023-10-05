@@ -4,11 +4,12 @@
 import time
 
 from netflix_actions import Netflix
-USER_EMAIL= "insay.un.ga@gmail.com"
+USER_EMAIL= "storevideo77@gmail.com"
 USER_PASS= "@thenew56"
 PROFILE_PIN= "4242"
 
-PROFILE_TO_PIN= "khusboo.t_"
+PROFILE_TO_PIN= "alex siss"
+IS_MASTER_PROFILE= True
 
 
 # ENDPOINT= "https://www.netflix.com/np/login"
@@ -66,7 +67,9 @@ PROFILE_TO_PIN_FORMATTED= f"profile_{returned_all_profiles.index(PROFILE_TO_PIN.
 
 print(PROFILE_TO_PIN_FORMATTED)
 
-netflix.put_pin(profile_name=PROFILE_TO_PIN_FORMATTED,account_password=USER_PASS,pin_code=PROFILE_PIN)
+
+
+# netflix.remove_pin(rprofile_name=PROFILE_TO_PIN_FORMATTED,raccount_password=USER_PASS,IS_MASTER=IS_MASTER_PROFILE)
 
 
 
