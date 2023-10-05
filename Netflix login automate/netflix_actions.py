@@ -47,7 +47,7 @@ class Netflix:
         last_four_digits= self.driver.find_element(By.CSS_SELECTOR,".account-section-item .wallet--mop").text[15:]
         card_brand= self.driver.find_element(By.CSS_SELECTOR,".account-section-item .wallet--mop img").get_attribute("alt")
 
-        account_status= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[1]/section/div[2]/div/div/div[1]/div[2]').text
+
 
 
         account_payment_plan= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[2]/section/div/div[1]/div[1]/div/b').text
@@ -99,6 +99,31 @@ class Netflix:
 
         self.pin_save= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[2]/div[4]/button[1]')
         self.pin_save.click()
+
+
+    def remove_pin(self,rprofile_name,raccount_password,IS_MASTER):
+
+        self.declare= IS_MASTER
+        if self.declare==True:
+            self.rprofile= "profile_0"
+        else:
+            self.rprofile= rprofile_name
+        self.rpassword=raccount_password
+        rformatted_XPATH= f'//*[@id="{self.rprofile}"]/ul/li[3]/a'
+        rnormal_click= self.driver.find_element(By.CSS_SELECTOR,f".profile-hub ul #{self.rprofile}")
+        rnormal_click.click()
+        rchange_pin= self.driver.find_element(By.XPATH,rformatted_XPATH)
+        rchange_pin.click()
+        self.rpassword_field= self.driver.find_element(By.NAME,"input-account-content-restrictions")
+        self.rpassword_field.send_keys(self.rpassword)
+        self.rpassword_field.send_keys(Keys.ENTER)
+        time.sleep(2)
+        self.rcheckpoint= self.driver.find_element(By.CLASS_NAME,'ui-binary-input')
+        self.rcheckpoint.click()
+        time.sleep(1)
+
+        self.rpin_save= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[2]/div[3]/button[1]')
+        self.rpin_save.click()
 
 
 
