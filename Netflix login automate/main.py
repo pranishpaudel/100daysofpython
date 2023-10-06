@@ -25,6 +25,7 @@ for netflixx in netflix_accounts:
 
     netflix= Netflix(n_Email=netflixx.split("|")[0], n_Password=netflixx.split("|")[1])
     driver_message= netflix.login()
+    
     if WELCOME_MSG.lower() in netflix.check_alive_netflix().lower():
         print(f"Netflix: THE NETFLIX ACCOUNT {netflixx} HAS DIED")
     elif not INCORRECT_PASS_RES.lower() in driver_message.lower() and not TECHNICAL_MSG.lower() in driver_message.lower():
