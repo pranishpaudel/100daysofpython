@@ -220,9 +220,6 @@ def approve_user(update: Update, context: CallbackContext) -> None:
 
 def change_password(update: Update, context: CallbackContext) -> None:
     update.message.reply_text("*Please Wait......*",parse_mode=ParseMode.MARKDOWN)
-    if update.message.from_user.id != ADMIN_TELEGRAM_ID:
-        update.message.reply_text("❌ You don't have permission to use this command.")
-        return
     
     user_id = update.message.from_user.id
     
@@ -284,9 +281,6 @@ def change_password(update: Update, context: CallbackContext) -> None:
 def put_pin(update: Update, context: CallbackContext) -> None:
     update.message.reply_text("*Please Wait......*", parse_mode=ParseMode.MARKDOWN)
 
-    if update.message.from_user.id != ADMIN_TELEGRAM_ID:
-        update.message.reply_text("❌ You don't have permission to use this command.")
-        return
 
     user_id = update.message.from_user.id
 
@@ -347,9 +341,6 @@ def put_pin(update: Update, context: CallbackContext) -> None:
 def remove_pin(update: Update, context: CallbackContext) -> None:
     update.message.reply_text("*Please Wait......*", parse_mode=ParseMode.MARKDOWN)
 
-    if update.message.from_user.id != ADMIN_TELEGRAM_ID:
-        update.message.reply_text("❌ You don't have permission to use this command.")
-        return
 
     user_id = update.message.from_user.id
 
@@ -412,9 +403,6 @@ def remove_pin(update: Update, context: CallbackContext) -> None:
 def watch_history(update: Update, context: CallbackContext) -> None:
     update.message.reply_text("*Please Wait......*", parse_mode=ParseMode.MARKDOWN)
 
-    if update.message.from_user.id != ADMIN_TELEGRAM_ID:
-        update.message.reply_text("❌ You don't have permission to use this command.")
-        return
 
     user_id = update.message.from_user.id
 
@@ -513,9 +501,6 @@ def reply_user(update: Update, context: CallbackContext) -> None:
         )
         return
 
-    if update.message.from_user.id != ADMIN_TELEGRAM_ID:
-        update.message.reply_text("❌ You don't have permission to use this command.")
-        return
 
     # Extract account information from the message text
     message_text = update.message.text
