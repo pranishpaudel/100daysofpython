@@ -285,6 +285,8 @@ def put_pin(update: Update, context: CallbackContext) -> None:
     user_id = update.message.from_user.id
 
     if not database.is_user_approved(user_id):
+
+
         update.message.reply_text(
             "❌ Your access to the Site Details Extractor Bot is pending approval. "
             "The administrator will review your request and grant you access shortly."

@@ -97,13 +97,11 @@ class Netflix:
                                  last_four_digits="NO IDEA LOL"
                             account_status= self.driver.find_element(By.CSS_SELECTOR,"[data-uia='gift-credit-content-subhead']").text
                             card_brand= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[1]/section/div[2]/div/div/div[1]/div[1]/div[1]').text
-                            try:
-                                try:
-                                    account_payment_plan= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[2]/section/div/div[1]/div[1]/div/b').text
-                                except:
-                                    account_payment_plan= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[5]/div[2]/section/div/div[1]/div[1]/div').text
-                            except:
-                                    account_payment_plan= "IDK LOL"
+                        try:
+                            account_payment_plan= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[2]/section/div/div[1]/div[1]/div/b').text
+                        except:
+                            account_payment_plan= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[5]/div[2]/section/div/div[1]/div[1]/div').text
+            
                          
 
                     
