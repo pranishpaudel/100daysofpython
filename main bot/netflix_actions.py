@@ -12,8 +12,14 @@ class Netflix:
         self.email = n_Email
         self.password = n_Password
 
-        options = webdriver.ChromeOptions()
-        options.add_experimental_option("detach",True)  # Run in headless mode
+        # options = webdriver.ChromeOptions()
+          # Run in headless mode
+        # options.add_experimental_option("detach", True)
+        options= webdriver.ChromeOptions()  # Run in headless mode
+        # options.add_experimental_option("detach", True)
+        options.add_argument("--headless")
+        
+
         self.driver = webdriver.Chrome(options=options)
         self.driver.get(ENDPOINT)
         self.all_profiles = []
@@ -57,27 +63,63 @@ class Netflix:
 
     
     def extract_all_info(self):
-        
-            last_four_digits= self.driver.find_element(By.CSS_SELECTOR,".account-section-item .wallet--mop").text[15:]
-            account_status= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[1]/section/div[2]/div/div/div[1]/div[2]').text
-            card_brand= self.driver.find_element(By.CSS_SELECTOR,".account-section-item .wallet--mop img").get_attribute("alt")
-            if last_four_digits.strip().lower()=="credit":
-                 last_four_digits= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[1]/section/div[2]/div/div/div[1]/div[3]/div/span').text[15:]
-                 account_status= self.driver.find_element(By.CSS_SELECTOR,"[data-uia='gift-credit-content-subhead']").text
-                 card_brand= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[1]/section/div[2]/div/div/div[1]/div[1]/div[1]').text
-            account_payment_plan= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[2]/section/div/div[1]/div[1]/div/b').text
+                    time.sleep(2)
+                    try:
+                        self.error= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[1]/div/article/section/h2').text
+                    except:
+                         self.error= "NONE"
+                    if self.error.strip().lower()=="your account is on hold. retry your payment?":
+                        full_info= f"🔴{self.error}"
+                        self.all_profiles=["no","one"]
+                        return self.all_profiles, full_info
+                    else:
+                        try:
+                            last_four_digits= self.driver.find_element(By.CSS_SELECTOR,".account-section-item .wallet--mop").text[15:]
+                        except:
+                             last_four_digits="vinda"
+                        try:
+                            try:
+                                account_status= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[1]/section/div[2]/div/div/div[1]/div[2]').text
+                            except:
+                                account_status= self.driver.find_element(By.CSS_SELECTOR,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[5]/div[1]/section/div[2]/div/div/div[1]/div[1]/div[2]').text
+                        except:
+                             account_status= "UNKNOWN"
+                        try:
+                            card_brand= self.driver.find_element(By.CSS_SELECTOR,".account-section-item .wallet--mop img").get_attribute("alt")
+                        except:
+                             card_brand="NO IDEA"
+                            
+                        if last_four_digits.strip().lower()=="credit":
 
-            
+                            try:
+                                last_four_digits= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[1]/section/div[2]/div/div/div[1]/div[3]/div/span').text[15:]
+                            except:
+                                 last_four_digits="NO IDEA LOL"
+                            account_status= self.driver.find_element(By.CSS_SELECTOR,"[data-uia='gift-credit-content-subhead']").text
+                            card_brand= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[1]/section/div[2]/div/div/div[1]/div[1]/div[1]').text
+                            try:
+                                try:
+                                    account_payment_plan= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[2]/section/div/div[1]/div[1]/div/b').text
+                                except:
+                                    account_payment_plan= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[5]/div[2]/section/div/div[1]/div[1]/div').text
+                            except:
+                                    account_payment_plan= "IDK LOL"
+                         
 
-            profile_names= self.driver.find_elements(By.CSS_SELECTOR,".profile-hub ul .single-profile")
+                    
 
-            for profiles in profile_names:
+                    profile_names= self.driver.find_elements(By.CSS_SELECTOR,".profile-hub ul .single-profile")
 
-                self.all_profiles.append(profiles.text.split("\n")[0].lower())
+                    for profiles in profile_names:
 
-            full_info= f"Account Status: {account_payment_plan} [ {account_status} ] || Card Brand: {card_brand} || Last Four Digits: {last_four_digits}"
-            return full_info, self.all_profiles
+                        self.all_profiles.append(profiles.text.split("\n")[0].lower())
+                    print(account_payment_plan)
+                    print(account_status)
+                    print(card_brand)
 
+                    full_info= f"Account Status: {account_payment_plan} [ {account_status} ] || Card Brand: {card_brand} || Last Four Digits: {last_four_digits}"
+                    return full_info, self.all_profiles
+                    
     
     def close_driver(self):
         self.driver.quit()
