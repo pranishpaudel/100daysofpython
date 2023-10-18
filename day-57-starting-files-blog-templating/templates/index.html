@@ -15,14 +15,14 @@
         <div class="card">
             <h2>{{ posts[0]["title"] }}</h2>
             <p class="text">{{ posts[0]["subtitle"] }} </p>
-            <a href="#">Read</a>
+            <a href="{{ url_for('get_post',num=0)}}">Read</a>
         </div>
     </div>
     <div class="content">
         <div class="card">
             <h2>{{ posts[1]["title"] }}</h2>
             <p class="text">{{ posts[1]["subtitle"] }} </p>
-            <a href="#">Read</a>
+            <a href="{{ url_for('get_post',num=1)}}">Read</a>
         </div>
     </div>
 </div>

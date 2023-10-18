@@ -1,15 +1,17 @@
 from flask import Flask, render_template
-import requests
+from post import Post
 
 
 app = Flask(__name__)
+post= Post()
 
 @app.route('/')
 def home():
-    blog_urll= "https://api.npoint.io/126573c3358ffdf5c119"
-    response= requests.get(blog_urll)
-    all_posts= response.json()
-    return render_template("index.html",posts=all_posts)
+    return render_template("index.html",posts=post.send_all_post())
+
+@app.route('/post/<num>')
+def get_post(num):
+    return render_template("post.html",posts=post.send_wanted_post(int(num)))
 
 
 
