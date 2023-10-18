@@ -23,7 +23,12 @@ def home(namee):
     new_name= namee[0].upper()+namee[1:]
     return render_template("index.html",numm=random_num,year=current_year,age=get_data_by_name(namee),name=new_name)
 
-@app.route("/")
+@app.route("/blog")
+def get_blog():
+    blog_urll= "https://api.npoint.io/126573c3358ffdf5c119"
+    response= requests.get(blog_urll)
+    all_posts= response.json()
+    return render_template("blog.html",posts=all_posts)
 
 if __name__ == "__main__":
     app.run(debug=True)
