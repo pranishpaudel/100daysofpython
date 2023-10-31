@@ -1,18 +1,14 @@
-import random
+from selenium import webdriver
+from selenium.webdriver import ChromeOptions
 
-def mix_names(name1, name2):
-    mixed_name = name1 + name2
-    mixed_name = list(mixed_name)
-    random.shuffle(mixed_name)
-    mixed_name = ''.join(mixed_name)
-    return mixed_name
+# Initialize the Chrome WebDriver
+driver = webdriver.Chrome()
+options= ChromeOptions()
+options.add_experimental_option("detach",True)
+# Navigate to the URL
+url = 'https://www2.2checkout.com/checkout/purchase?PTCOID=19c741de0a301cc980319a6a4f086a7f'
+driver.get(url)
 
-# Get user input
-name1 = input("Enter the first name: ")
-name2 = input("Enter the second name: ")
+# You can now interact with the web page or retrieve information using Selenium.
 
-# Call the function and get the mixed name
-mixed_name = mix_names(name1, name2)
-
-# Print the mixed name
-print("Mixed Name:", mixed_name)
+# Close the WebDriver when you're done
