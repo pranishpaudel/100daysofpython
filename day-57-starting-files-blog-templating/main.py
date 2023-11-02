@@ -11,6 +11,7 @@ def home():
 
 @app.route('/post/<num>')
 def get_post(num):
+    print(num)
     return render_template("post.html",posts=post.
                            
                            send_wanted_post(int(num)))
