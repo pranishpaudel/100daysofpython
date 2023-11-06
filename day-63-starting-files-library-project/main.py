@@ -97,7 +97,7 @@ def new_rating(num):
         rating= float(request.form["ratenew"])
         try :
             get_book_by_primary(num,rating)
-            return ("UPDATED SUCCESSFULL")
+            return render_template("index.html")
         except:
             return "SOME ERRORS"
 
