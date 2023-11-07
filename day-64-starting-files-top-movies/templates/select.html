@@ -5,9 +5,13 @@
 {% block content %}
 <div class="container">
     <h1 class="heading">Select Movie</h1>
-  <p>
-    <a href="#"> MOVIE TITLE - MOVIE RELEASE DATE</a>
-  </p>
+
+    <p>
+        {% for movie in current_list %}
+        <a href="{{ url_for('confirm_add',movie_name=movie.original_title,movie_release=movie.release_date,movie_image=movie.poster_path,movie_description=movie.overview)}}">{{ movie.original_title }} - {{ movie.release_date }}</a><br>
+
+        {% endfor %}
+    </p>
 
 </div>
 {% endblock %}
