@@ -6,6 +6,14 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import requests
 
+MOVIE_ENDPOINT= "https://api.themoviedb.org/3/search/movie"
+HEADER = {
+    "accept": "application/json",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyY2U0MWI1Y2Y2ZDczZDg5OWI4YWYxNjFlOWE1ZDdmNyIsInN1YiI6IjY1NDhmYzJmNmJlYWVhMDE0YjY5MWRhOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.g69PyrrWoyfKtloqxDSpYBXiPYeVcJqL0tgN6V2ovQ8"
+}
+
+
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 Bootstrap5(app)
@@ -36,27 +44,21 @@ with app.app_context():
 
 ## After adding the new_movie the code needs to be commented out/deleted.
 ## So you are not trying to add the same movie twice. The db will reject non-unique movie titles.
-def create_new_row():
-    new_movie = Movie(
-    title="Avatar The Way of Water",
-    year=2022,
-    description="Set more than a decade after the events of the first film, learn the story of the Sully family (Jake, Neytiri, and their kids), the trouble that follows them, the lengths they go to keep each other safe, the battles they fight to stay alive, and the tragedies they endure.",
-    rating=7.3,
-    ranking=9,
-    review="I liked the water.",
-    img_url="https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg"
-    )
 
 
-    with app.app_context():
-        db.session.add(new_movie)
-        db.session.commit()
 
-create_new_row()
 def return_all_records():
     with app.app_context():
         all_movies= Movie.query.all()
         return all_movies
+
+
+def search_movie_by_name(wanted_movie):
+
+
+    movie_data= requests.get(url=f"{MOVIE_ENDPOINT}?query={wanted_movie}&include_adult=false&language=en-US&page=1",headers=HEADER).json()["results"]
+    return (movie_data)
+
 
 
 
@@ -76,15 +78,19 @@ def delete_moviue_by_primary(num):
     with app.app_context():
         movie_name= db.get_or_404(Movie,num)
         db.session.delete(movie_name)
-        all_movies= Movie.query.all()
-        countt=1
-        for movie in all_movies:
-            movie.id= countt
-            countt+=1
-
-
+        sort_movies_in_order()
         done= db.session.commit()
         return done
+
+
+def sort_movies_in_order():
+    with app.app_context():
+        result = db.session.execute(db.select(Movie).order_by(Movie.rating))
+        all_movies = result.scalars().all() # convert ScalarResult to Python List
+
+        for i in range(len(all_movies)):
+            all_movies[i].ranking = len(all_movies) - i
+        db.session.commit()
 
 
 @app.route("/edit/<insa>",methods=["POST","GET"])
@@ -116,9 +122,41 @@ def add_it():
     form= MyForm()
     if form.validate_on_submit() or request.method=="POST":
         movie=form.movie.data
-        
+        movie_data= search_movie_by_name(movie)
+        print(movie_data)
+        return render_template("select.html",current_list=movie_data)
+
 
     return render_template("add.html",form=form)
+
+@app.route("/confirm_add/<movie_name>/<movie_release>/<movie_image>/<movie_description>",methods=["GET","POST"])
+
+def confirm_add(movie_name,movie_release,movie_image,movie_description):
+
+    with app.app_context():
+
+        new_movie = Movie(
+        title=movie_name,
+        year=movie_release,
+        description=movie_description,
+        rating=0,
+        ranking=9,
+        review="Review not set yet",
+        img_url=f"https://image.tmdb.org/t/p/w500/{movie_image}"
+        )
+
+        db.session.add(new_movie)
+        insa= db.session.commit()
+        result = db.session.execute(db.select(Movie).where(Movie.title == movie_name))
+        all_movies = result.scalar()
+        sort_movies_in_order()
+        if str(insa).lower()=="none":
+            return redirect(url_for('edit_it',insa=all_movies.id))
+
+
+
+    
+
 
 if __name__ == '__main__':
     app.run(debug=True)
