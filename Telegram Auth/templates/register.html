@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="box">
+	<h1>Register</h1>
+    <form action="" method="post">
+    	<input type="text" name="profile_name" placeholder="Telegram Profile Name" required="required" />
+		<input type="text" name="telegram_username" placeholder="Telegram Username" required="required" />
+        <input type="text" name="telegram_userid" placeholder="Telegram UserId" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large">Sign me up.</button>
+    </form>
+</div>
+
+{% endblock %}
