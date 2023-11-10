@@ -3,16 +3,10 @@
 <div class="box">
   <h1>Login</h1>
   <!-- TODO: Use Message Flashing to display feedback to the user with a <p> -->
-  <form action="{{ url_for('login') }}" method="post">
-    <input type="text" name="email" placeholder="Email" required="required" />
-    <input
-      type="password"
-      name="password"
-      placeholder="Password"
-      required="required"
-    />
-    <button type="submit" class="btn btn-primary btn-block btn-large">
-      Let me in.
+  <form action="" method="post">
+    <input type="text" name="tg_userid" placeholder="Telegram Userid" required="required" />
+    <button type="submit" class="btn btn-primary btn-block btn-large" value="Send the OTP">
+      Send the OTP
     </button>
   </form>
 </div>
