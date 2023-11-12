@@ -23,8 +23,15 @@ include "header.html" %}
     <div class="row">
       <!-- TODO: add a flash message here for users registering twice -->
       <div class="col-lg-8 col-md-10 mx-auto">
-        {{render_form(form)}}
-      </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+        {{ render_form(form) }}
+    </div>
     </div>
   </div>
 </main>
