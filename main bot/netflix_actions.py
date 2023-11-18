@@ -100,7 +100,7 @@ class Netflix:
                         try:
                             account_payment_plan= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[6]/div[2]/section/div/div[1]/div[1]/div/b').text
                         except:
-                            account_payment_plan= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[1]/div/article/section/h2').text
+                            account_payment_plan= self.driver.find_element(By.XPATH,'//*[@id="appMountPoint"]/div/div/div/div[2]/div/div/div[5]/div[2]/section/div/div[1]/div[1]/div/b').text
             
                          
 
