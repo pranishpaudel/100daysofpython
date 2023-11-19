@@ -28,4 +28,16 @@ print(GRADUATES1_EARNING)
 
 
 
+#How would we calculate the difference between the earnings of the 10th and 90th percentile? 
+
+
+diff_db= clean_db['Mid-Career 90th Percentile Salary'] - clean_db['Mid-Career 10th Percentile Salary']
+
+clean_db.insert(1,"Spread",diff_db)
+print(clean_db.head())
+
+
+
+
+
 
