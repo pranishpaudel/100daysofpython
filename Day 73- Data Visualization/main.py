@@ -81,3 +81,23 @@ reshaped_df = reshaped_df.fillna(0)
 
 print(reshaped_df.count())
 
+
+import matplotlib.pyplot as plt
+
+roll_df = reshaped_df.rolling(window=6).mean()
+plt.figure(figsize=(16, 10))
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+
+for column in roll_df.columns:
+    plt.plot(roll_df.index, roll_df[column], linewidth=3, label=column)
+
+plt.legend(fontsize=14)  # Add legend with fontsize
+plt.title('Time Programming Graph', fontsize=18)
+plt.xlabel('X-axis Label', fontsize=16)
+plt.ylabel('Y-axis Label', fontsize=16)
+
+plt.show()
+
+
+
