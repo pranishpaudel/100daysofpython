@@ -97,6 +97,11 @@ plt.title('Time Programming Graph', fontsize=18)
 plt.xlabel('X-axis Label', fontsize=16)
 plt.ylabel('Y-axis Label', fontsize=16)
 
+
+#Add sime
+
+def vericas():
+   return True
 plt.show()
 
 
