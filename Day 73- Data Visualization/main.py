@@ -102,7 +102,24 @@ plt.ylabel('Y-axis Label', fontsize=16)
 
 def vericas():
    return True
+
 plt.show()
 
 
+
+
+
+#CREATE LOCATORS FOR TICKS ON THE TIME AXIS
+
+
+ax1 = plt.gca()
+ax2 = ax1.twinx()
+ax1.set_ylabel('TSLA Stock Price', color='#E6232E',fontsize=14) # can use a HEX code
+ax2.set_ylabel('Search Trend', color='skyblue',fontsize=14) # or a named colour
+plt.title('Tesla Websearch vs Price')
+ax1.set_ylim([0, 14000])
+ax1.set_xlim([df_btc_price.DATE.min(), df_btc_price.DATE.max()])
+ax1.plot(df_btc_price.DATE, df_btc_price.CLOSE, color='#E6232E',linewidth=3)
+ax2.plot(df_btc_price.MONTH, df_btc_price.TSLA_WEB_SEARCH, color='skyblue',linewidth=3)
+plt.show()
 
