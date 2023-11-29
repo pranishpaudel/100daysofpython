@@ -4,19 +4,33 @@
 
 {% block content %}
 
-<div class="entire">
+<div class="login">
 
 
-<form>
+<form method="POST">
+    {% csrf_token %}
     <label>Username:</label>
-    <input type="text" value="username" placeholder="Enter Username" >
+    <input type="text" name="username" placeholder="Enter Username" >
     <label>Passworde:</label>
-    <input type="password" value="password" placeholder="Enter Password" >
+    <input type="password" name="password" placeholder="Enter Password" >
 <input type="submit" value="Login">
-
 </form>
+<p>Haven't signed up yet?</p>
+<a href="{% url 'registerUser' %}">Sign up</a>
 
 
 </div>
 
+<hr>
+<div class="register">
+
+
+    <form method="POST">
+        {% csrf_token %}
+    <input type="submit" value="Register"></form>
+    <p>Already logged in?</p>
+<a href="{% url 'login_page' %}">Log In</a>
+    
+    
+    </div>
 {% endblock content %}
