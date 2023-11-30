@@ -1,6 +1,56 @@
 {% include 'navbar.html'%}
 
 {% block content %}
-<h1>{{room.id}} -- {{room.name}}</h1>
 
+
+<style>
+    .room-container {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+    }
+</style>
+<div class="room-container">
+    <div>
+
+        <h1>{{room.id}} -- {{room.name}}</h1>
+
+        <p>{{room.description}}</p>
+
+        <div class="comment-wrapper">
+            <h3>Conversation</h3>
+            {% for message in messages %}
+            <div>
+
+                <small>@{{message.user}}, {{message.created |timesince}} ago</small>
+                <div><p>{{message.body}}</p> {% if request.user.is_authenticated %} <a href="{% url 'delete_message' message.id %}">Delete</a> {% endif %}</div>
+
+
+                <hr>
+            </div>
+            {% endfor %}
+
+        </div>
+
+
+        <div class="comment-form">
+
+            {% if request.user.is_authenticated %}
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input type="text" name="body" placeholder="Write you message here">
+            </form>
+
+            {% endif %}
+        </div>
+    </div>
+
+    <div>
+        <h3>Participants</h3>
+    <hr>
+        {% for user in participants %}
+        @{{user}}
+        <hr>
+        {% endfor %}
+    </div>
+</div>
 {% endblock content %}
