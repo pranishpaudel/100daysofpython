@@ -7,16 +7,16 @@
 <div class="login">
 
 
-<form method="POST">
-    {% csrf_token %}
-    <label>Username:</label>
-    <input type="text" name="username" placeholder="Enter Username" >
-    <label>Passworde:</label>
-    <input type="password" name="password" placeholder="Enter Password" >
-<input type="submit" value="Login">
-</form>
-<p>Haven't signed up yet?</p>
-<a href="{% url 'registerUser' %}">Sign up</a>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Username:</label>
+        <input type="text" name="username" placeholder="Enter Username">
+        <label>Passworde:</label>
+        <input type="password" name="password" placeholder="Enter Password">
+        <input type="submit" value="Login">
+    </form>
+    <p>Haven't signed up yet?</p>
+    <a href="{% url 'registerUser' %}">Sign up</a>
 
 
 </div>
@@ -27,10 +27,12 @@
 
     <form method="POST">
         {% csrf_token %}
-    <input type="submit" value="Register"></form>
+        {{form.as_p}}
+        <input type="submit" value="Register">
+    </form>
     <p>Already logged in?</p>
-<a href="{% url 'login_page' %}">Log In</a>
-    
-    
-    </div>
+    <a href="{% url 'login_page' %}">Log In</a>
+
+
+</div>
 {% endblock content %}

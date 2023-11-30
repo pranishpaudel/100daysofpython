@@ -3,7 +3,8 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from .models import Room,Topic
+from django.contrib.auth.forms import UserCreationForm
+from .models import Room,Topic,Message
 from .forms import RoomForm
 from django.contrib import messages
 
@@ -42,6 +43,17 @@ def login_page(request):
     context = {'page':page}
     return render(request, 'base/login_register.html', context)
 
+@login_required(login_url='login')
+def delete_message(request,message_id):
+    message_obj= Message.objects.get(id=message_id)
+    if request.user!=message_obj.user:
+        return HttpResponse("You are not allowed here!")
+    else:
+        message_obj.delete()
+        return redirect()
+
+
+
 
 def logoutUser(request):
     logout(request)
@@ -49,8 +61,19 @@ def logoutUser(request):
 
 
 def registerUser(request):
+    form= UserCreationForm()
     page='register'
-    return render(request,'base/login_register.html')
+    if request.method=="POST":
+        form= UserCreationForm(request.POST)
+        if form.is_valid():
+            user= form.save(commit=False)
+            user.username= user.username.lower()
+            user.save()
+            login(request,user)
+            return redirect('home')
+        else:
+            messages.error(request,"A error occured during registration")
+    return render(request,'base/login_register.html',{'form':form})
 
 def home(request):
     q= request.GET.get("q") if request.GET.get("q")!=None else ""
@@ -63,7 +86,17 @@ def home(request):
 
 def room(request, pk):
     room=Room.objects.get(id=pk)
-    content= {'room':room}
+    room.save()
+    messages= room.message_set.all().order_by('-created')
+    participantss= room.participants.all()
+    if request.method=="POST":
+        message= Message.objects.create(
+            user= request.user,
+            room=room,
+            body=request.POST.get("body")
+        )
+        return redirect (request.META.get('HTTP_REFERER'))
+    content= {'room':room,'messages': messages,'participants':participantss}
     return render(request, 'base/room.html', content)
 @login_required(login_url='/login')
 def create_room(request):
