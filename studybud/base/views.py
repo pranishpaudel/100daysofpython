@@ -50,7 +50,7 @@ def delete_message(request,message_id):
         return HttpResponse("You are not allowed here!")
     else:
         message_obj.delete()
-        return redirect()
+        return redirect(request.META.get('HTTP_REFERER'))
 
 
 
@@ -82,7 +82,8 @@ def home(request):
                                Q(description__icontains=q)) 
     room_count= rooms.count()
     topics= Topic.objects.all()
-    return render(request,'base/home.html',{'rooms': rooms,'topics':topics,'room_count':room_count})
+    room_messages= Message.objects.filter(Q(room__topic__name__icontains=q))
+    return render(request,'base/home.html',{'rooms': rooms,'topics':topics,'room_count':room_count,'room_messages':room_messages})
 
 def room(request, pk):
     room=Room.objects.get(id=pk)
@@ -104,11 +105,20 @@ def create_room(request):
     if request.method=="POST":
         form= RoomForm(request.POST)
         if form.is_valid():
-            form.save()
+            room= form.save(commit=False)
+            room.host= request.user
+            room.save()
             return redirect('home')
     context= {'form':form}
     return render(request,'base/room_form.html',context)
 
+def userProfile(request,pk):
+    user_obj= User.objects.get(id=pk)
+    rooms= user_obj.room_set.all()
+    room_messages= user_obj.message_set.all()
+    topics= Topic.objects.all()
+    context={"user":user_obj,'rooms':rooms,'room_messages':room_messages,'topics':topics}
+    return render(request,'base/profile.html',context)
 
 
 def updateRoom(request,pk):
