@@ -1,6 +1,23 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h1>Project Templates</h1>
-    <p>Lorem Ipsum is simply a dummy text without a fixed ideology, kicking his balls on a daily basis.</p>
+    <h1>Projects</h1>
+    <table>
+        <tr>
+            <th>Project</th>
+            <th>Votes</th>
+            <th>Ratio</th>
+            <th></th>
+        </tr>
+    
+        {% for projec in projects %}
+        <tr> 
+            <td>{{ projec.title }}</td>
+            <td>{{ projec.vote_ratio }}</td>
+            <td>{{ projec.vote_total }}</td>
+            <td>{{ projec.created }}</td>
+            <td><a href="{% url 'project' projec.id %}">View</a></td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock content %}
