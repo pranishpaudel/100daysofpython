@@ -1,14 +1,20 @@
-# 🚨 Don't change the code below 👇
-year = int(input("Which year do you want to check? "))
-# 🚨 Don't change the code above 👆
+from selenium import webdriver
+import time
 
-#Write your code below this line 👇
+for i in range(1, 1000):
 
-if (year % 4==0):
-  if (year%100==0 and year%400!=0):
-    print("Not a leap year.")
-  else:
-    print("Leap year.")
-else:
-  print("Not a leap year.")
-    
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+
+    # Create a new instance of the Chrome driver
+    driver = webdriver.Chrome(options=options)
+
+
+    try:
+        driver.get("https://github.com/pranishpaudel")
+        time.sleep(3)
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        # Close the browser window after each iteration
+        driver.quit()

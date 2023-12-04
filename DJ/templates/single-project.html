@@ -2,7 +2,9 @@
 
 
 {% block content %}
-
+IMG SRC
+<a href="{{ projectObj.featured_img.url }}"><img style="max-width: 500px;" src="{{ projectObj.featured_img.url }}"></a>
+--
 <h1>{{projectObj.title}}</h1>
 <hr>
 {% for tag in tags %}
