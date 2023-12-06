@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import Project,Tag
+from .models import Project,Tag,Profile
 from .forms import ProjectForm
 from django.views.decorators.http import require_http_methods,require_POST,require_GET
 # Create your views here.
@@ -8,7 +8,7 @@ from django.views.decorators.http import require_http_methods,require_POST,requi
 
 def projects(request):
     projects= Project.objects.all()
-    context= {'projects':projects }
+    context= {'projects':projects,'profile':Profile }
     return render(request,"projects.html", context)
 
 
