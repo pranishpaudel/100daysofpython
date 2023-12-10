@@ -28,10 +28,14 @@ def profile_user(request,pk):
 def userAccount(request):
     profile= request.user.profile
     skills= profile.skill_set.all()
-    context={'profile':profile,'skills':skills}
+    projects=profile.project_set.all()
+    context={'profile':profile,'skills':skills,'projects':projects}
     return render(request,"users/account.html",context)
 
-
+@login_required(login_url='login_user')
+def editAccount(request):
+    context={}
+    return render(request,"users/user-profile.html",context)
 def login_user(request):
     page= True
     mariko=False
