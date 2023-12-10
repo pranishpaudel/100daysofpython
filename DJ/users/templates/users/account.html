@@ -10,7 +10,7 @@
       <div class="column column--1of3">
         <div class="card text-center">
           <div class="card__body dev">
-            <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
+            <a class="tag tag--pill tag--main settings__btn" href="{% url 'editAccount' %}"><i class="im im-edit"></i> Edit</a>
             <img class="avatar avatar--xl dev__avatar" src="{{ profile.profile_image.url }}" />
             <h2 class="dev__name">{{profile.name}}</h2>
             <p class="dev__title">{{profile.short_intro}}</p>
@@ -59,16 +59,14 @@
         </div>
 
         <table class="settings__table">
+          {% for project in projects %}
           <tr>
             <td class="settings__thumbnail">
-              <a href="single-project.html"><img src="images/project-a.png" alt="Project Thumbnail" /></a>
+              <a href="{% url 'project' project.id %}"><img src="{{project.featured_img.url}}" alt="Project Thumbnail" /></a> 
             </td>
             <td class="settings__tableInfo">
-              <a href="single-project.html">Yoga Studio Landing Page</a>
-              <p>
-                Consectetur adipisicing elit. Natus nam dolore aut sed vitae eos architecto unde tempore
-                exercitationem fugiat?...
-              </p>
+              <a href="{% url 'project' project.id %}">{{project}}</a> 
+              <p>{{project.description}}</p>
             </td>
             <td class="settings__tableActions">
               <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
@@ -76,40 +74,7 @@
                 Delete</a>
             </td>
           </tr>
-          <tr>
-            <td class="settings__thumbnail">
-              <a href="single-project.html"><img src="images/project-b.png" alt="Project Thumbnail" /></a>
-            </td>
-            <td class="settings__tableInfo">
-              <a href="single-project.html">DevSearch Website UI Design</a>
-              <p>
-                Consectetur adipisicing elit. Natus nam dolore aut sed vitae eos architecto unde tempore
-                exercitationem fugiat?...
-              </p>
-            </td>
-            <td class="settings__tableActions">
-              <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
-              <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-x-mark-circle-o"></i>
-                Delete</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="settings__thumbnail">
-              <a href="single-project.html"><img src="images/project-a.png" alt="Project Thumbnail" /></a>
-            </td>
-            <td class="settings__tableInfo">
-              <a href="single-project.html">Portfolio Website Design</a>
-              <p>
-                Consectetur adipisicing elit. Natus nam dolore aut sed vitae eos architecto unde tempore
-                exercitationem fugiat?...
-              </p>
-            </td>
-            <td class="settings__tableActions">
-              <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
-              <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-x-mark-circle-o"></i>
-                Delete</a>
-            </td>
-          </tr>
+          {% endfor %}
         </table>
       </div>
     </div>
