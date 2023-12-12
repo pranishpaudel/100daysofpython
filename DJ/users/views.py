@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm,ProfileForm,SkillForm
 from .models import User
 from .models import Profile,Skill
 from django.contrib import messages
+from django.http import HttpResponse
 
 # Create your views here.
 def profiles(request):
@@ -33,9 +34,17 @@ def userAccount(request):
     return render(request,"users/account.html",context)
 
 @login_required(login_url='login_user')
-def editAccount(request):
-    context={}
-    return render(request,"users/user-profile.html",context)
+def editAccount(request,pk):
+    wanted_object= Profile.objects.get(id=pk)
+    form= ProfileForm(instance=wanted_object)
+    context={'form':form}
+    if  wanted_object==request.user.profile and request.user.id==wanted_object.user.id:
+        if request.method=="POST":
+            form= ProfileForm(request.POST,request.FILES,instance=wanted_object)
+            form.save()
+    else:
+        return HttpResponse("Its not your profile to edit boiii")
+    return render(request,"users/profile-form.html",context)
 def login_user(request):
     page= True
     mariko=False
@@ -84,7 +93,7 @@ def registerUser(request):
         username = request.POST.get("username")
         if User.objects.filter(username=username).exists():
             user_exists = True
-
+#http://127.0.0.1:8000/edit_account/8aa1781c-bfd2-4cbd-8b23-b125ad8cc359/
         if not user_exists:
             if form.is_valid():
                 form.save()
@@ -92,7 +101,7 @@ def registerUser(request):
                 if user is not None:
                     login(request, user)
                     messages.success(request, "User account created and logged in successfully.")
-                    return redirect('profiles')
+                    return redirect('editAccount',pk=request.user.profile.id)
                 else:
                     messages.error(request, "Failed to authenticate user after registration.")
             else:
@@ -104,4 +113,44 @@ def registerUser(request):
     return render(request, "users/login_register.html", context)
 
 
+@login_required(login_url="login_user")
+def create_skill(request):
+    form= SkillForm()
+    context={'form':form}
+    if request.method=="POST":
+        form= SkillForm(request.POST)
+        skill_form= form.save(commit=False)
+        skill_form.owner= request.user.profile
+        skill_form.save()
+        return redirect(userAccount)
+    return render(request,'users/skill_form.html',context)
 
+
+
+@login_required(login_url="login_user")
+def update_skill(request,pk):
+    skill_object=Skill.objects.get(id=pk)
+    if request.user.profile==skill_object.owner:
+        form= SkillForm(instance=skill_object)
+        context={'form':form}
+        if request.method=="POST":
+            form= SkillForm(request.POST,instance=skill_object)
+            form.save()
+            return redirect(userAccount)
+    else:
+        return HttpResponse("You are not allowed to update this skill")
+    return render(request,'users/skill_form.html',context)
+
+
+@login_required(login_url="login_user")
+def delete_skill(request,pk):
+    skill_object=Skill.objects.get(id=pk)
+    if request.user.profile==skill_object.owner:
+        print("USER IS AUTHORIZED")
+        context={}
+        if request.method=="POST":
+            skill_object.delete()
+            return redirect(userAccount)
+    else:
+        return HttpResponse("You are not allowed to update this skill")
+    return render(request,"users/account.html",context)

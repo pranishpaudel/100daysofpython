@@ -10,7 +10,7 @@ CLIENT_ID= "958e0602fc4e4549b875d5b9518a7c2b"
 CLIENT_SECRET= "40aaa75a1b7740a9a893dd28adee7552"
 REDIRECT_URI = 'http://localhost:8000/callback'
 
-User_demand_date= "2007-06-16"
+User_demand_date= "2023-05-16"
 
 ENDPOINT_URL= f"https://www.billboard.com/charts/hot-100/{User_demand_date}/"
 
