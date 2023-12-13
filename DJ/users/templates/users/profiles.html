@@ -1,7 +1,6 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<h1>User Profiles</h1>
 <main class="home">
     <section class="hero-section text-center">
         <div class="container container--narrow">
@@ -11,14 +10,17 @@
             </div>
 
             <div class="hero-section__search">
-                <form class="form" action="#" method="get">
+                <form class="form" action="{% url 'profiles' %}" method="get">
                     <div class="form__field">
                         <label for="formInput#search">Search Developers </label>
-                        <input class="input input--text" id="formInput#search" type="text" name="text"
-                            placeholder="Search by developer name" />
+                        <input class="input input--text" id="formInput#search" type="text" name="search_query"
+                            value="{{search_query}}" placeholder="Search by developer name" />
                     </div>
+                    <button class="btn btn--sub btn--lg" type="submit">Search</button>
+                </form>
+            </div>
 
-                    <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+                
                 </form>
             </div>
         </div>
