@@ -5,14 +5,17 @@ from .forms import CustomUserCreationForm,ProfileForm,SkillForm
 from .models import User
 from django.db.models import Q
 from .models import Profile,Skill
-from .utils import searchProfiles
+from .utils import searchProfiles,paginate_profiles
 from django.contrib import messages
 from django.http import HttpResponse
 
 # Create your views here.
 def profiles(request):
     profiles,search_query=searchProfiles(request)
-    context = {'profiles':profiles,'search_query':search_query}
+    results=3
+    page= request.GET.get('page')
+    profiles,paginator,custom_range=paginate_profiles(request,profiles,results,page)
+    context = {'profiles':profiles,'search_query':search_query,'paginator':paginator,'custom_range':custom_range}
     return render(request,'users/profiles.html',context)
 
 

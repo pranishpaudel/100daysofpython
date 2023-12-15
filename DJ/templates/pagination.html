@@ -1,19 +1,35 @@
-{% if projects.has_other_pages %}
+{% if query_set.has_other_pages %}
         <div class="pagination">
           <ul class="container">
-            {% if projects.has_previous %}
-            <li><a href="?page={{projects.previous_page_number}}" class="btn page-link">&#10094; Prev</a></li>
+            {% if query_set.has_previous %}
+            <li><a href="?page={{query_set.previous_page_number}}" class="btn page-link">&#10094; Prev</a></li>
             {% endif %}
         {% for page in custom_range %}
-        {% if page == projects.number %}
+        {% if page == query_set.number %}
         <li><a href="?page={{page}}" class="btn page-link btn--sub">{{page}}</a></li>
         {% else %}
         <li><a href="?page={{page}}" class="btn page-link">{{page}}</a></li>
         {% endif %}
         {% endfor %}
-        {% if projects.has_next %}
-        <li><a href="?page={{projects.next_page_number}}" class="btn page-link"> Next &#10095;</a></li>
+        {% if query_set.has_next %}
+        <li><a href="?page={{query_set.next_page_number}}" class="btn page-link"> Next &#10095;</a></li>
         {% endif %}
           </ul>
         </div>
 {% endif %}
+
+<script type="text/javascript">
+    // Get search form and page links
+let searchForm = document.getElementById('searchForm');
+let pageLinks = document.getElementsByClassName('page-link');
+
+// Ensure search form and page links exist
+if (searchForm && pageLinks.length > 0) {
+    for (let i = 0; i < pageLinks.length; i++) {
+        pageLinks[i].addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log("Button Clicked");
+        });
+    }
+}
+</script>
