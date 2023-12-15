@@ -2,7 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save,post_delete
 from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.conf import settings
 import uuid
+import smtplib
+
+
+  
 
 # Create your models here.
 class Profile(models.Model):
@@ -41,14 +47,24 @@ class Skill(models.Model):
 
 # @receiver(post_save,sender=Profile)
 def CreateUser(sender,instance,created,**kwargs):
-     if created:
-         user= instance
-         profile= Profile.objects.create(
+    if created:
+        user= instance
+        profile= Profile.objects.create(
              user= user,
              username= user.username,
              email= user.email,
              name= user.first_name,
          )
+                 
+        my_email= "pkpoudelpranishma@gmail.com"
+        password= "jfew wwbj szja ijki"
+        connection= smtplib.SMTP("smtp.gmail.com")
+        connection.starttls()
+        connection.login(user=my_email,password=password)
+        connection.sendmail(from_addr= my_email
+                                    , to_addrs= profile.email,
+                                    msg=f"Subject:Welcome Email \n We're glad to be welcome you here")
+        connection.close()
 
 def deleteUser(sender,instance,**kwargs):
     print("deleting user...")

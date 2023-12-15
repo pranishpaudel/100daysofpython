@@ -6,6 +6,7 @@ from django.apps import AppConfig
 from django.core.signals import request_finished
 
 
+
 @receiver(post_save, sender=Profile)
 def update_user(sender,instance,created,**kwargs):
     profile= instance
@@ -16,7 +17,6 @@ def update_user(sender,instance,created,**kwargs):
         user.username= profile.username
         user.email=profile.email
         user.save()
-
 
 
 
