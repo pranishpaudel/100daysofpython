@@ -23,7 +23,19 @@ class Project(models.Model):
         return self.title
     
     class Meta:
-        ordering= ['-created']
+        ordering= ['-vote_ratio','-vote_total']
+    @property
+    def getVoteCount(self):
+        reviews = self.review_set.all()
+        upVotes = reviews.filter(value='up').count()
+        totalVotes = reviews.count()
+
+        # Avoid division by zero
+        ratio = (upVotes / totalVotes) * 100 if totalVotes != 0 else 0
+
+        self.vote_total = totalVotes
+        self.vote_ratio = int(ratio)
+        self.save()
     
 
 class Review(models.Model):
@@ -58,6 +70,26 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class Message(models.Model):
+    sender = models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True)
+    recepient= models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True,related_name="messages")
+    name= models.CharField(max_length=200,null=True,blank=True)
+    email= models.CharField(max_length=200,null=True,blank=True)
+    subject= models.CharField(max_length=200,null=True,blank=True)
+    body= models.TextField(max_length=1000,null=True,blank=True)
+    is_read= models.BooleanField(default=False,null=True)
+    created= models.DateTimeField(auto_now_add=True)
+    id= models.UUIDField(default=uuid.uuid4,unique=True,primary_key=True,editable=False) 
+
+    def __str__(self):
+        return self.subject
+    class Meta:
+        ordering= ['is_read','-created']
+    
+
+
     
 
 

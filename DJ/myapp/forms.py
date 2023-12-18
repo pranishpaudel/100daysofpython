@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Project,Review
+from .models import Project,Review,Message
 from django import forms
 
 class ProjectForm(ModelForm):
@@ -36,3 +36,14 @@ class ReviewForm(forms.ModelForm):
         super(ReviewForm, self).__init__(*args, **kwargs)
         self.fields['value'].widget.attrs.update({'class': 'form-control'})
         self.fields['body'].widget.attrs.update({'class': 'form-control', 'rows': 5}) 
+
+
+
+
+class MessageForm(ModelForm):
+    class Meta:
+        model= Message
+        fields= '__all__'
+        exclude=['sender','is_read']
+
+
