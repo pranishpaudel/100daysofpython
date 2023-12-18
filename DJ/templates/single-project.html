@@ -21,7 +21,7 @@
         </div>
         <div class="column column--2of3">
           <img class="singleProject__preview" src="{{ projectObj.featured_img.url }}" alt="portfolio thumbnail" />
-          <a href="profile.html" class="singleProject__developer">Md. Shahriar Parvez</a>
+          <a href="profile.html" class="singleProject__developer">{{projectObj.owner.name}}</a>
           <h2 class="singleProject__title">{{projectObj.title}}</h2>
           <h3 class="singleProject__subtitle">About the Project</h3>
           <div class="singleProject__info">{{projectObj.description}}
@@ -33,13 +33,15 @@
               36% Postitive Feedback ({{projectObj.vote_total}} Votes)
             </h5>
 
-            <form class="form" action="#" method="POST">
+            <form class="form" action="" method="POST">
+              {% csrf_token %}
+              {% for fields in form %}
               <!-- Textarea -->
               <div class="form__field">
-                <label for="formInput#textarea">Comments: </label>
-                <textarea class="input input--textarea" name="message" id="formInput#textarea"
-                  placeholder="Write your comments here..."></textarea>
+                <label for="formInput#textarea">{{fields.label}}: </label>
+                  {{fields}}
               </div>
+              {% endfor %}
               <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
             </form>
             <div class="commentList">
@@ -53,17 +55,19 @@
                   <p class="comment__info">{{projectObj.description}}</p>
                 </div>
               </div>
+              {% for review in projectObj.review_set.all %}
+              {% if review.body %}
               <div class="comment">
                 <a href="profile.html">
-                  <img class="avatar avatar--md" src="https://avatars.githubusercontent.com/u/33843378" alt="user" />
+                  <img class="avatar avatar--md" src="{{review.owner.profile_image.url}}" alt="user" />
                 </a>
+                
                 <div class="comment__details">
-                  <a href="profile.html" class="comment__author">{{projectObj.owner}}</a>
-                  <p class="comment__info">
-                    Consectetur adipisicing elit. Reprehenderit alias numquam perferendis mollitia minus minima
-                    exercitationem possimus ab deserunt qui, ratione, dignissimos ut magni laborum quo.
-                  </p>
+                  <a href="profile.html" class="comment__author">{{review.owner.name}}</a>
+                  <p class="comment__info">{{review.body}}</p>
                 </div>
+                {% endif %}
+                {% endfor %}
               </div>
             </div>
           </div>

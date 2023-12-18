@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('myapp.urls')),
     path('',include('users.urls')),
-    path('reset_password/',auth_views.PasswordResetView.as_view(),name='reset_password'),
+    path('api/',include('api.urls')),
 ]
 
 
