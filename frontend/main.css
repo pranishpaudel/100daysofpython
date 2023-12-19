@@ -1,0 +1,32 @@
+body{
+    background-color: #f8fafb;
+    margin: 0;
+}
+
+img{
+    width: 100%
+
+}
+
+#projects--wrapper{
+    max-width: 600px;
+    margin:0 auto;
+    margin-top: 2em;
+    border: 1 px solid #eaeaeb;
+    background-color: white;
+    border-radius: 5px ;
+}
+
+.project--card{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap:2em;
+    margin-top:2em;
+}
+
+
+.card--header{
+    display: flex;
+    align-items: center;
+    gap: 2em;
+}
