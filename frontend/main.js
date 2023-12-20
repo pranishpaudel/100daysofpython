@@ -24,6 +24,8 @@ let projectCard= `
                   <strong class="vote--option">&#x2719;</strong>
                   <strong class="vote--option">&#x2212;</strong>
                   </div>
+                  <i>${project.vote_ratio}% Postive feedback</i>
+                  <p>${project.description.substring(0,150)}</p>
                   </div>
                   </div>
 `
