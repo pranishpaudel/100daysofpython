@@ -36,7 +36,10 @@ def getProject(request,pk):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def projectVote(request,pk):
-    project= Project.objects.get(id=pk)
+    project= Project.objects.get(id="17213ad2-7809-4881-adea-4ce610e65622")
     print(f"Data: {request.data}")
+    vote_updated= project.review_set.all()
+    for vote_update in vote_updated:
+        vote_update= request.data['value']
     serializer= ProjectSerializer(project,many=False)
     return Response(serializer.data)
