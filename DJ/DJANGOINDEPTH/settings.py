@@ -88,14 +88,19 @@ WSGI_APPLICATION = 'DJANGOINDEPTH.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -149,3 +154,15 @@ STATIC_ROOT= BASE_DIR/ 'staticfiles'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+# STATICFILES_STORAGE = "storages.backends.s3.S3Storage"
+# settings.py
+
+AWS_ACCESS_KEY_ID = 'AKIAVOXES7AE7JLOAVGY'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'devsearch-buk'
+
+AWS_S3_REGION_NAME = "ap-south-1"
+
