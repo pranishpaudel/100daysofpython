@@ -27,7 +27,7 @@ def find_key_by_value(dictionary, target_value):
     return None
 
 # print(morse_code_dict["7"])
-
+##ok
 
 ##ASK USER THE TEXT TO MORSE IT
 
