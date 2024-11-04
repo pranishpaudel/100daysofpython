@@ -1,0 +1,9 @@
+# Mark CSS files as documentation to exclude from language statistics
+*.css linguist-documentation=true
+
+# If you want to completely ignore CSS files from statistics
+*.css linguist-detectable=false
+
+# Explicitly mark your main languages as detectable
+*.py linguist-detectable=true
+*.ts linguist-detectable=true
