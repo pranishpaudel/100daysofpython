@@ -3,6 +3,7 @@
 
 # If you want to completely ignore CSS files from statistics
 *.css linguist-detectable=false
+*.html linguist-detectable=false
 
 # Explicitly mark your main languages as detectable
 *.py linguist-detectable=true
